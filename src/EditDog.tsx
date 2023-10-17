@@ -5,34 +5,23 @@ import { BreedsDropdown } from "./BreedsDropdown";
 
 // prettier-ignore
 const updateDogMutation = graphql(`#graphql
-  mutation UpdateDog($id: ID!, $name: String, $breedId: ID) {
-    updateDog(id: $id, name: $name, breed_id: $breedId) {
-      id
-      Breed {
-        id
-      }
-      name
-    }
+  mutation UpdateDog {
+    __typename ## TODO: Mutation mit Argumenten
   }
 `);
 
 export function EditDog({ id, onSave }: { id: string; onSave?: () => void }) {
   const { loading, data } = useQuery(dogQuery, { variables: { id } });
 
-  const [mutate] = useMutation(updateDogMutation);
+  // TODO: useMutation hier verwenden
 
   async function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     const breedId = ev.currentTarget.breed.value;
     const name = ev.currentTarget.dogName.value;
-    await mutate({
-      variables: {
-        id,
-        breedId,
-        name,
-      },
-      // refetchQueries: ["AllDogs", "Dog"],
-    });
+
+    // TODO: Mutation aufrufen
+
     onSave?.();
   }
 

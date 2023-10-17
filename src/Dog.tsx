@@ -1,43 +1,17 @@
-import { useQuery, useSuspenseQuery } from "@apollo/client";
-import { graphql } from "./gql";
 import { useState } from "react";
 import { EditDog } from "./EditDog";
+import { graphql } from "./gql";
 
 // prettier-ignore
 export const dogQuery = graphql(`#graphql
-  query Dog($id: ID!) {
-    Dog(id: $id) {
-      id
-      name
-      born
-      Breed {
-        id
-        name
-        origin
-      }
-      Image {
-        id
-        src
-        attribution
-      }
-    }
+  query Dog {
+    __typename # TODO: Query mit Variablen
   }
 `);
 export function Dog({ id }: { id: string }) {
   const [editing, setEditing] = useState(false);
-  /*
-  const { loading, data } = useQuery(dogQuery, {
-    variables: { id },
-    context: { delay: 700 },
-  });
 
-  if (loading) return <p>Loading...</p>;
-*/
-
-  const { data } = useSuspenseQuery(dogQuery, {
-    variables: { id },
-    context: { delay: 700 },
-  });
+  // TODO: Query hier verwenden
 
   if (editing) {
     return <EditDog onSave={() => setEditing(false)} id={id} />;
@@ -46,18 +20,18 @@ export function Dog({ id }: { id: string }) {
   return (
     <article>
       <h2>
-        {data?.Dog?.name} <button onClick={() => setEditing(true)}>edit</button>
+        Hundename <button onClick={() => setEditing(true)}>edit</button>
       </h2>
-      <img src={data?.Dog?.Image?.src} alt={data?.Dog?.Image?.attribution} />
+      <img src={"http://example.com"} alt={""} />
 
       <p>
-        <strong>Breed:</strong> {data?.Dog?.Breed?.name}
+        <strong>Breed:</strong>
       </p>
       <p>
-        <strong>Breed Origin:</strong> {data?.Dog?.Breed?.origin}
+        <strong>Breed Origin:</strong>
       </p>
       <p>
-        <strong>Born:</strong> {data?.Dog?.born}
+        <strong>Born:</strong>
       </p>
     </article>
   );
