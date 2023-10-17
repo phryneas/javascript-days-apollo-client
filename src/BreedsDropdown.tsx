@@ -2,11 +2,19 @@ import { useQuery } from "@apollo/client";
 import { graphql } from "./gql";
 
 // prettier-ignore
+graphql(`#graphql
+  fragment BreedsFragment on Breed {
+    id
+    name
+    origin
+  }
+`);
+
+// prettier-ignore
 const breedsQuery = graphql(`#graphql
   query Breeds {
     allBreeds {
-      id
-      name
+      ...BreedsFragment
     }
   }
 `);

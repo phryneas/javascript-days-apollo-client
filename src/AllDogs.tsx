@@ -28,7 +28,7 @@ export function AllDogs({ onSelect }: { onSelect?: (id: string) => void }) {
     <ul>
       {data?.allDogs?.map((dog) => (
         <li key={dog?.id} onClick={() => onSelect?.(dog!.id)}>
-          <h2>{dog?.name} (Edit)</h2>
+          <h2>{dog?.name}</h2>
           <p>the {dog?.Breed?.name}</p>
           <img src={dog?.Image?.src} alt={dog?.Image?.attribution} />
         </li>
