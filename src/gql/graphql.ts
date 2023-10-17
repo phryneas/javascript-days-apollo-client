@@ -14,6 +14,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /** Date type */
+  Date: { input: any; output: any; }
 };
 
 export type Breed = {
@@ -44,6 +46,7 @@ export type Dog = {
   __typename?: 'Dog';
   Breed?: Maybe<Breed>;
   Image?: Maybe<Image>;
+  born: Scalars['Date']['output'];
   breed_id: Scalars['ID']['output'];
   id: Scalars['ID']['output'];
   image_id: Scalars['ID']['output'];
@@ -51,6 +54,12 @@ export type Dog = {
 };
 
 export type DogFilter = {
+  born?: InputMaybe<Scalars['Date']['input']>;
+  born_gt?: InputMaybe<Scalars['Date']['input']>;
+  born_gte?: InputMaybe<Scalars['Date']['input']>;
+  born_lt?: InputMaybe<Scalars['Date']['input']>;
+  born_lte?: InputMaybe<Scalars['Date']['input']>;
+  born_neq?: InputMaybe<Scalars['Date']['input']>;
   breed_id?: InputMaybe<Scalars['ID']['input']>;
   breed_id_neq?: InputMaybe<Scalars['ID']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -64,6 +73,7 @@ export type DogFilter = {
 };
 
 export type DogInput = {
+  born: Scalars['Date']['input'];
   breed_id: Scalars['ID']['input'];
   image_id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
@@ -122,6 +132,7 @@ export type MutationCreateBreedArgs = {
 
 
 export type MutationCreateDogArgs = {
+  born: Scalars['Date']['input'];
   breed_id: Scalars['ID']['input'];
   image_id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
@@ -172,6 +183,7 @@ export type MutationUpdateBreedArgs = {
 
 
 export type MutationUpdateDogArgs = {
+  born?: InputMaybe<Scalars['Date']['input']>;
   breed_id?: InputMaybe<Scalars['ID']['input']>;
   id: Scalars['ID']['input'];
   image_id?: InputMaybe<Scalars['ID']['input']>;
@@ -271,7 +283,7 @@ export type DogQueryVariables = Exact<{
 }>;
 
 
-export type DogQuery = { __typename?: 'Query', Dog?: { __typename?: 'Dog', id: string, name: string, Breed?: { __typename?: 'Breed', id: string, name: string, origin: string } | null, Image?: { __typename?: 'Image', id: string, src: string, attribution: string } | null } | null };
+export type DogQuery = { __typename?: 'Query', Dog?: { __typename?: 'Dog', id: string, name: string, born: any, Breed?: { __typename?: 'Breed', id: string, name: string, origin: string } | null, Image?: { __typename?: 'Image', id: string, src: string, attribution: string } | null } | null };
 
 export type BreedsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -289,6 +301,6 @@ export type UpdateDogMutation = { __typename?: 'Mutation', updateDog?: { __typen
 
 
 export const AllDogsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllDogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allDogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"src"}},{"kind":"Field","name":{"kind":"Name","value":"attribution"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Breed"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<AllDogsQuery, AllDogsQueryVariables>;
-export const DogDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Dog"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Dog"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"Breed"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"origin"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"src"}},{"kind":"Field","name":{"kind":"Name","value":"attribution"}}]}}]}}]}}]} as unknown as DocumentNode<DogQuery, DogQueryVariables>;
+export const DogDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Dog"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Dog"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"born"}},{"kind":"Field","name":{"kind":"Name","value":"Breed"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"origin"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"src"}},{"kind":"Field","name":{"kind":"Name","value":"attribution"}}]}}]}}]}}]} as unknown as DocumentNode<DogQuery, DogQueryVariables>;
 export const BreedsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Breeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allBreeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<BreedsQuery, BreedsQueryVariables>;
 export const UpdateDogDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDog"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"breedId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDog"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"breed_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"breedId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"Breed"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<UpdateDogMutation, UpdateDogMutationVariables>;

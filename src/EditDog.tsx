@@ -54,6 +54,7 @@ export function EditDog({ id, onSave }: { id: string; onSave?: () => void }) {
         breedId,
         name,
       },
+      // refetchQueries: ["AllDogs", "Dog"],
     });
     onSave?.();
   }
@@ -70,7 +71,7 @@ export function EditDog({ id, onSave }: { id: string; onSave?: () => void }) {
           Breed: <BreedsDropdown defaultValue={data?.Dog?.Breed?.id} />
         </label>
         <label>
-          Name:{" "}
+          Name:
           <input type="text" name="dogName" defaultValue={data?.Dog?.name} />
         </label>
         <button type="submit">Submit</button>

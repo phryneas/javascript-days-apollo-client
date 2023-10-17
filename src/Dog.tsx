@@ -9,6 +9,7 @@ export const dogQuery = graphql(`#graphql
     Dog(id: $id) {
       id
       name
+      born
       Breed {
         id
         name
@@ -44,6 +45,9 @@ export function Dog({ id }: { id: string }) {
       </p>
       <p>
         <strong>Breed Origin:</strong> {data?.Dog?.Breed?.origin}
+      </p>
+      <p>
+        <strong>Born:</strong> {data?.Dog?.born}
       </p>
     </article>
   );
