@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useSuspenseQuery } from "@apollo/client";
 import { graphql } from "./gql";
 import { useState } from "react";
 import { EditDog } from "./EditDog";
@@ -25,13 +25,23 @@ export const dogQuery = graphql(`#graphql
 `);
 export function Dog({ id }: { id: string }) {
   const [editing, setEditing] = useState(false);
-  const { loading, data } = useQuery(dogQuery, { variables: { id } });
+  /*
+  const { loading, data } = useQuery(dogQuery, {
+    variables: { id },
+    context: { delay: 700 },
+  });
+
+  if (loading) return <p>Loading...</p>;
+*/
+
+  const { data } = useSuspenseQuery(dogQuery, {
+    variables: { id },
+    context: { delay: 700 },
+  });
 
   if (editing) {
     return <EditDog onSave={() => setEditing(false)} id={id} />;
   }
-
-  if (loading) return <p>Loading...</p>;
 
   return (
     <article>

@@ -7,12 +7,30 @@ import {
   HttpLink,
   InMemoryCache,
   ApolloProvider,
+  Observable,
+  ApolloLink,
 } from "@apollo/client";
 
+const delayLink = new ApolloLink((operation, forward) => {
+  const delay = operation.getContext().delay ?? 0;
+  return new Observable((observer) => {
+    const handle = setTimeout(() => {
+      forward(operation).subscribe({
+        next: observer.next.bind(observer),
+        error: observer.error.bind(observer),
+        complete: observer.complete.bind(observer),
+      });
+    }, delay);
+    return () => clearTimeout(handle);
+  });
+});
+
+const httpLink = new HttpLink({
+  uri: "http://localhost:3010/",
+});
+
 const client = new ApolloClient({
-  link: new HttpLink({
-    uri: "http://localhost:3010/",
-  }),
+  link: delayLink.concat(httpLink),
   cache: new InMemoryCache({
     typePolicies: {
       Dog: {

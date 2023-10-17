@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { graphql } from "./gql";
+import { useTransition } from "react";
 
 // prettier-ignore
 const AllDogsQuery = graphql(`#graphql
