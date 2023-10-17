@@ -1,27 +1,50 @@
-# React + TypeScript + Vite
+# Grober Ablauf:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## GraphQL basics
 
-Currently, two official plugins are available:
+- Repo auschecken
+- `npm install`
+- `npm run db`
+- http://localhost:3010/ im Browser oeffnen, Queries und Mutations ausprobieren, Konzepte verstehen
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Apollo Client Basics
 
-## Expanding the ESLint configuration
+- neuen `ApolloClient` erstellen, `ApolloProvider` einrichten
+- Beispiel anschauen: `useQuery` hook fuer eine Liste von Hunden
+- kurzer Blick auf das, was der GraphQL Codegen im Hintergrund macht (`yarn codegen --watch`)
+- Nachprogrammieren: `useQuery` Hook um Details fuer einen einzelnen Hund abzurufen (Variablen verwenden!)
+- "Hund editieren" Seite erstellen: `useMutation` um Daten eines Hundes zu updaten
+  - Beobachtungen: Rueckgabewerte der Mutation updaten den Cache
+    - den normalisierten Cache angucken
+  - Alternative: `refetchQueries`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Advanced
 
-- Configure the top-level `parserOptions` property like this:
+- im Breed-Dropdown: extrahieren eines Fragmentes - ist jetzt ueberall in der App verfuegbar.
+- Hunde-Geburtsdatum kommt haesslich aus dem InMemoryCache.
+  - fieldPolicy mit `read` anlegen und das Datum formattieren
+- erstellen eines Links, um mittels `context` einzelne Queries langsamer zu machen => spielen mit Loading-States
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Modern
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- switchen eines `useQuery` hooks zum `useSuspenseQuery` hook
+- Einfuehren einer `Suspense` boundary
+- vergleichen
+- `useTransition` ausprobieren.
+
+## Ein echtes Projekt: Der Spotifyt Showcase
+
+- Projekt klonen: https://github.com/apollographql/spotify-showcase
+- Arbeiten mit echten Daten statt fake Daten: Spotify App unter https://developer.spotify.com/dashboard anlegen
+- Um zu gucken was im Router passiert (sehr cool!): Account bei https://studio.apollographql.com und den "Demo-Graph" anlegen lassen - der ist direkt fuer diese Seite
+  - ggf. noetig: in der Router Config (Settings -> Cloud Router) im yaml Introspection aktivieren:
+  ```yaml
+  supergraph:
+    introspection: true
+  ```
+- Secrets und URL in `.env.development.local` hinterlegen≈
+- Wir schauen uns die App zusammen an.
+  Interessante Sachen:
+  - Fragment Colocation
+  - Suspense Boundaries
+  - kuenstlich verzoegerte Requests (im Query `@synthetics(timeout: 1000)` Direktive zu beliebigen Feldern hinzufuegen)
