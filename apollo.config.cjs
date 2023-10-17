@@ -1,4 +1,3 @@
-console.log("fooo!");
 module.exports = {
   client: {
     service: {
@@ -6,5 +5,6 @@ module.exports = {
       url: "http://localhost:3010",
     },
     includes: ["./src/**/*.tsx"],
+    excludes: ["./srcx/gql/**/*"],
   },
 };
