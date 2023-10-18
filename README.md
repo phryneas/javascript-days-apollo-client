@@ -35,7 +35,7 @@
 ## Ein echtes Projekt: Der Spotify Showcase
 
 - Projekt klonen: https://github.com/apollographql/spotify-showcase
-- Arbeiten mit echten Daten statt fake Daten: Spotify App unter https://developer.spotify.com/dashboard anlegen
+- Arbeiten mit echten Daten statt fake Daten: Spotify App unter https://developer.spotify.com/dashboard anlegen (Redirect Uri: `http://localhost:3000/oauth/finalize` !)
 - Um zu gucken was im Router passiert (sehr cool!): Account bei https://studio.apollographql.com und den "Demo-Graph" anlegen lassen - der ist direkt fuer diese Seite
   - ggf. noetig: in der Router Config (Settings -> Cloud Router) im yaml Introspection aktivieren:
   ```yaml
