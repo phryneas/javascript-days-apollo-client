@@ -32,7 +32,7 @@
 - vergleichen
 - `useTransition` ausprobieren.
 
-## Ein echtes Projekt: Der Spotifyt Showcase
+## Ein echtes Projekt: Der Spotify Showcase
 
 - Projekt klonen: https://github.com/apollographql/spotify-showcase
 - Arbeiten mit echten Daten statt fake Daten: Spotify App unter https://developer.spotify.com/dashboard anlegen
