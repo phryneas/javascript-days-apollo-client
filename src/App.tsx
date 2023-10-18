@@ -7,9 +7,11 @@ function App() {
 
   return (
     <>
-      <aside></aside>
-      <main>
+      <aside>
         <AllDogs onSelect={setSelectedDog} />
+      </aside>
+      <main>
+        <Dog id={selectedDog} />
       </main>
     </>
   );

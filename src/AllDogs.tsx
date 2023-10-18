@@ -30,7 +30,7 @@ export function AllDogs({ onSelect }: { onSelect?: (id: string) => void }) {
         <li key={dog?.id} onClick={() => onSelect?.(dog!.id)}>
           <h2>{dog?.name}</h2>
           <p>the {dog?.Breed?.name}</p>
-          <img src={dog?.Image?.src} alt={dog?.Image?.attribution} />
+          <img src={dog?.Image?.src} title={dog?.Image?.attribution} />
         </li>
       ))}
     </ul>
