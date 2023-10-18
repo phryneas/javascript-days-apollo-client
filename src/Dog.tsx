@@ -31,6 +31,7 @@ export function Dog({ id }: { id: string }) {
 
   const { loading, data } = useQuery(dogQuery, {
     variables: { id },
+    context: { delay: 1000 },
   });
 
   if (editing) {
