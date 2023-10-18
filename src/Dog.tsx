@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { EditDog } from "./EditDog";
 import { graphql } from "./gql";
-import { useQuery } from "@apollo/client";
+import { useQuery, useSuspenseQuery } from "@apollo/client";
 
 // prettier-ignore
 export const dogQuery = graphql(`#graphql
@@ -29,17 +29,14 @@ export const dogQuery = graphql(`#graphql
 export function Dog({ id }: { id: string }) {
   const [editing, setEditing] = useState(false);
 
-  const { loading, data } = useQuery(dogQuery, {
+  const { data } = useSuspenseQuery(dogQuery, {
     variables: { id },
     context: { delay: 1000 },
+    fetchPolicy: "cache-first",
   });
 
   if (editing) {
     return <EditDog onSave={() => setEditing(false)} id={id} />;
-  }
-
-  if (loading) {
-    return <>loading...</>;
   }
 
   return (
