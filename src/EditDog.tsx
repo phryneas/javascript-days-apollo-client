@@ -1,47 +1,82 @@
-import { useMutation, useQuery } from "@apollo/client";
-import { dogQuery } from "./Dog";
+import { useFragment, useMutation } from "@apollo/client";
 import { graphql } from "./gql";
 import { BreedsDropdown } from "./BreedsDropdown";
 
 // prettier-ignore
+const dogFragment = graphql(`#graphql
+  fragment EditDogFragment on Dog {
+      id
+      name
+      born
+      Image {
+        id
+        src
+        attribution
+      }
+      Breed {
+        id
+        name
+        origin
+      }
+  }
+`)
+
+// prettier-ignore
 const updateDogMutation = graphql(`#graphql
-  mutation UpdateDog {
-    __typename ## TODO: Mutation mit Argumenten
+  mutation UpdateDog($id: ID!, $name: String!, $breedId: ID! ) {
+    updateDog(id: $id, name: $name, breed_id: $breedId){
+      id
+      name
+      Breed {
+        id
+      }
+    }
   }
 `);
 
 export function EditDog({ id, onSave }: { id: string; onSave?: () => void }) {
-  const { loading, data } = useQuery(dogQuery, { variables: { id } });
+  const { data } = useFragment({
+    fragment: dogFragment,
+    from: { __typename: "Dog", id },
+  });
 
-  // TODO: useMutation hier verwenden
+  const [updateDog] = useMutation(updateDogMutation, {
+    refetchQueries: ["AllDogs"],
+  });
 
   async function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     const breedId = ev.currentTarget.breed.value;
     const name = ev.currentTarget.dogName.value;
 
-    // TODO: Mutation aufrufen
+    updateDog({
+      variables: {
+        id,
+        name,
+        breedId,
+      },
+    });
 
     onSave?.();
   }
 
-  if (loading) return <p>Loading...</p>;
-
   return (
     <article>
-      <h2>Edit {data?.Dog?.name}</h2>
-      <img src={data?.Dog?.Image?.src} alt={data?.Dog?.Image?.attribution} />
+      <h2>Edit {data?.name}</h2>
+      <img src={data?.Image?.src} alt={data?.Image?.attribution} />
 
       <form onSubmit={onSubmit}>
         <label>
-          Breed: <BreedsDropdown defaultValue={data?.Dog?.Breed?.id} />
+          Breed: <BreedsDropdown defaultValue={data?.Breed?.id} />
         </label>
         <label>
           Name:
-          <input type="text" name="dogName" defaultValue={data?.Dog?.name} />
+          <input type="text" name="dogName" defaultValue={data?.name} />
         </label>
         <button type="submit">Submit</button>
       </form>
     </article>
   );
 }
+
+EditDog.fragments = { dog: dogFragment };

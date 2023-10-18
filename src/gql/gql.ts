@@ -15,8 +15,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "#graphql\n  query AllDogs {\n    allDogs {\n      id\n      name\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n      }\n    }\n  }\n": types.AllDogsDocument,
     "#graphql\n  query Breeds {\n    allBreeds {\n      id\n    name\n    origin\n    }\n  }\n": types.BreedsDocument,
-    "#graphql\n  query Dog($id: ID!) {\n    Dog(id: $id) {\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n    }\n  }\n": types.DogDocument,
-    "#graphql\n  mutation UpdateDog {\n    __typename ## TODO: Mutation mit Argumenten\n  }\n": types.UpdateDogDocument,
+    "#graphql\n  query Dog($id: ID!) {\n    Dog(id: $id) {\n      ...EditDogFragment\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n    }\n  }\n  \n": types.DogDocument,
+    "#graphql\n  fragment EditDogFragment on Dog {\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n  }\n": types.EditDogFragmentFragmentDoc,
+    "#graphql\n  mutation UpdateDog($id: ID!, $name: String!, $breedId: ID! ) {\n    updateDog(id: $id, name: $name, breed_id: $breedId){\n      id\n      name\n      Breed {\n        id\n      }\n    }\n  }\n": types.UpdateDogDocument,
 };
 
 /**
@@ -44,11 +45,15 @@ export function graphql(source: "#graphql\n  query Breeds {\n    allBreeds {\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "#graphql\n  query Dog($id: ID!) {\n    Dog(id: $id) {\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n    }\n  }\n"): (typeof documents)["#graphql\n  query Dog($id: ID!) {\n    Dog(id: $id) {\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n    }\n  }\n"];
+export function graphql(source: "#graphql\n  query Dog($id: ID!) {\n    Dog(id: $id) {\n      ...EditDogFragment\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n    }\n  }\n  \n"): (typeof documents)["#graphql\n  query Dog($id: ID!) {\n    Dog(id: $id) {\n      ...EditDogFragment\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n    }\n  }\n  \n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "#graphql\n  mutation UpdateDog {\n    __typename ## TODO: Mutation mit Argumenten\n  }\n"): (typeof documents)["#graphql\n  mutation UpdateDog {\n    __typename ## TODO: Mutation mit Argumenten\n  }\n"];
+export function graphql(source: "#graphql\n  fragment EditDogFragment on Dog {\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n  }\n"): (typeof documents)["#graphql\n  fragment EditDogFragment on Dog {\n      id\n      name\n      born\n      Image {\n        id\n        src\n        attribution\n      }\n      Breed {\n        id\n        name\n        origin\n      }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "#graphql\n  mutation UpdateDog($id: ID!, $name: String!, $breedId: ID! ) {\n    updateDog(id: $id, name: $name, breed_id: $breedId){\n      id\n      name\n      Breed {\n        id\n      }\n    }\n  }\n"): (typeof documents)["#graphql\n  mutation UpdateDog($id: ID!, $name: String!, $breedId: ID! ) {\n    updateDog(id: $id, name: $name, breed_id: $breedId){\n      id\n      name\n      Breed {\n        id\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

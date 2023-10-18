@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 export const dogQuery = graphql(`#graphql
   query Dog($id: ID!) {
     Dog(id: $id) {
+      ...EditDogFragment
       id
       name
       born
@@ -22,7 +23,9 @@ export const dogQuery = graphql(`#graphql
       }
     }
   }
+  
 `);
+// ${EditDog.fragments.dog}
 export function Dog({ id }: { id: string }) {
   const [editing, setEditing] = useState(false);
 

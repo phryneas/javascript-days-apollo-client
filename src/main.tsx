@@ -5,6 +5,7 @@ import "./index.css";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import {
   ApolloClient,
+  ApolloLink,
   ApolloProvider,
   HttpLink,
   InMemoryCache,
@@ -13,7 +14,26 @@ import {
 loadDevMessages();
 loadErrorMessages();
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  typePolicies: {
+    Dog: {
+      fields: {
+        born: {
+          merge(existing, incoming) {
+            return new Date(incoming).toLocaleDateString();
+          },
+          /*
+          read(existing) {
+            if (!existing) return undefined;
+            return new Date(existing).toLocaleDateString();
+          },
+          */
+        },
+      },
+    },
+  },
+});
+
 const httpLink = new HttpLink({
   uri: "http://localhost:3010/",
 });
